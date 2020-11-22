@@ -28,7 +28,19 @@ MainWindow::~MainWindow()
 void MainWindow::AddAuthor(Author * author)
 {
     authors.push_back(author);
-    scrollLayout->addWidget(new QDynamicAuthor(this,author));
+    QDynamicAuthor* a = new QDynamicAuthor(this,author);
+    connect(a, SIGNAL(deleteAuthor(int)),SLOT(onDestroyedAuthor(int)));
+    scrollLayout->addWidget(a);
+}
+
+void MainWindow::onDestroyedAuthor(int id){
+    bool flag = true;
+    for(int i =0;flag;i++){
+        if(authors[i] && authors[i]->id ==id){
+            authors.erase(authors.begin()+i);
+            flag = false;
+    }
+    }
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -37,7 +49,7 @@ void MainWindow::on_pushButton_clicked()
         HashTable<std::string> ht;
         if(!ht.GetHashTableFromFile(ui->downloadFile->text().toStdString()))
         {
-             QMessageBox::information( this, "Button was clicked!",QString("Не удалось найти файл"));
+             QMessageBox::information( this, "",QString("Не удалось найти файл"));
         }
         else {
             Author * a  = new Author(ui->lineEdit->text().toStdString(),&ht);
@@ -69,12 +81,20 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_createCollectionBtn_clicked()
 {
-    HashTable<std::string>* result = authors[0]->genres;
+    HashTable<std::string>* result ;
+    bool isInit = false;
     ui->listWidget->clear();
-    for(int i =1;i<authors.size();i++){
-        result = *result && *(authors[i]->genres);
+    for(int i =0;i<authors.size();i++){
+        if(authors[i])
+            if(isInit){
+                result = *result && *(authors[i]->genres);
+            }
+            else{
+                result = authors[i]->genres;
+                isInit = true;
+            }
     }
-    if(result->GetSize()>0){
+    if(isInit && result->GetSize()>0){
         for (int i = 0; i < result->GetBufferSize(); ++i){
                 std::string  value =  result->GetValueByKey(i);
                 if(value != std::string())
@@ -82,5 +102,5 @@ void MainWindow::on_createCollectionBtn_clicked()
         }
     }
     else
-         QMessageBox::information( this, "Button was clicked!",QString("Сборник пуст"));
+         QMessageBox::information( this, "",QString("Сборник пуст"));
 }

@@ -21,6 +21,9 @@ private:
     QListWidget * lstWgt;
 
 
+signals:
+    void deleteAuthor(int id);
+
 public slots:
     void onDeleteAuthorBtnClicked();
 

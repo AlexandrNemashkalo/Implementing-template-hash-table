@@ -7,6 +7,7 @@
 #include "QMessageBox"
 #include <QFileDialog>
 #include "QHBoxLayout"
+#include "qdynamicauthor.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -32,10 +33,13 @@ private slots:
 
     void on_createCollectionBtn_clicked();
 
+    void onDestroyedAuthor(int id);
+
 private:
     Ui::MainWindow *ui;
     QHBoxLayout* scrollLayout;
     std::vector<Author*> authors;
+
 
 };
 #endif // MAINWINDOW_H

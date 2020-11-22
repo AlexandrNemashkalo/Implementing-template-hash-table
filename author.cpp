@@ -21,5 +21,5 @@ Author::Author(const std::string& name, const HashTable<std::string>* ht){
 
 Author::~Author()
 {
-    genres->~HashTable();
+    delete genres;
 }

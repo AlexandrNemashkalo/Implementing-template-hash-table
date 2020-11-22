@@ -57,8 +57,8 @@ QDynamicAuthor::QDynamicAuthor(QWidget *parent, Author* author):
     QListWidget* listWgt =new QListWidget;
     lstWgt = listWgt;
     lstWgt->setContentsMargins(0,5,0,5);
-    connect(lstWgt, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), SLOT(showDeleteBtn(QListWidgetItem *, QListWidgetItem *)));
-
+    connect(lstWgt, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
+            SLOT(showDeleteBtn(QListWidgetItem *, QListWidgetItem *)));
     QWidget* pushWgt = new QWidget;
     QLayout* l2 = new QHBoxLayout;
     l2->setContentsMargins(0,5,0,5);
@@ -89,6 +89,8 @@ QDynamicAuthor::QDynamicAuthor(QWidget *parent, Author* author):
 
 void QDynamicAuthor::onDeleteAuthorBtnClicked()
 {
+
+    emit deleteAuthor(this->author->id);
     delete this;
 }
 
@@ -125,7 +127,7 @@ void QDynamicAuthor::onPushBtnClicked()
                 e->setText("");
             }
             else
-                QMessageBox::information( this, "Button was clicked!", QString("Такой жанр уже существует") );
+                QMessageBox::information( this, "", QString("Такой жанр уже существует") );
         }
     }
 }
@@ -153,7 +155,7 @@ void QDynamicAuthor::onDeleteGanreBtnClicked()
         delete lstWgt->takeItem(lstWgt->currentRow());
     }
     else{
-       QMessageBox::information( this, "Button was clicked!",QString("В коллекции должен содержаться как минимум один жанр"));
+       QMessageBox::information( this, "",QString("В коллекции должен содержаться как минимум один жанр"));
     }
 }
 
@@ -166,7 +168,7 @@ void QDynamicAuthor::onDownloadAuthorBtnClicked()
     if(!(fileName ==""))
     {
         if(!this->author->genres->WriteFile(fileName.toStdString()))
-            QMessageBox::information( this, "Button was clicked!",QString("Не удалось загрузить колекцию в файл"));
+            QMessageBox::information( this, "",QString("Не удалось загрузить колекцию в файл"));
     }
 }
 
