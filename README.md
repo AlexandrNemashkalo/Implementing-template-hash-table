@@ -8,12 +8,12 @@
 ## Screenshots
 1. Начальное окно
 
-![main page](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/main/screens/start.png)
+![main page](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/master/screens/start.png)
 
 2. Поиск общих жанров
 
-![second](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/main/screens/result.png)
+![second](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/master/screens/result.png)
 
 3. Вывода сообщения отсутствии жанров в коллекции
 
-![item](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/main/screens/empty.png)
+![item](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/master/screens/empty.png)
