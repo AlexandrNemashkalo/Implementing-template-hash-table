@@ -6,6 +6,11 @@
 
 int main(int argc, char *argv[])
 {
+    std::setlocale(LC_ALL,"RUS");
+
+    HashTableTest<std::string> test ;
+    test.StartHashTableTests();
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
@@ -13,9 +18,6 @@ int main(int argc, char *argv[])
 
 
 
-
-    HashTableTest<std::string> test ;
-    test.StartHashTableTests();
 
     //return 0;
     return a.exec();

@@ -6,6 +6,7 @@
 #include "hashtable.h"
 
 
+
 template<class T>
 class HashTableTest{
 public:
@@ -74,12 +75,12 @@ public:
     }
 
     void InnerAnyAndEmptyTest(HashTable<T>& ht,HashTable<T>& defaultHT){
-        assert((ht&&defaultHT).GetSize() ==0);
+        assert((ht && defaultHT)->GetSize() ==0);
     }
 
     void InnerAnyAndAnyTest(HashTable<T>& ht,HashTable<T>& copyHT){
-        HashTable<std::string> resHT = ht && copyHT;
-        assert((resHT == ht) && (resHT == copyHT));
+        HashTable<std::string> * resHT = ht && copyHT;
+        assert((*resHT == ht) && (*resHT == copyHT));
     }
 
     void CopyConstructorTest(HashTable<T>& ht,HashTable<T>& copyHT){

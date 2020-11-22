@@ -65,34 +65,48 @@ public:
             while (!file.eof())
             {
                 std::getline(file, buff);
-                if(!(buff==""))
-                {
-                    if(!(*this << buff)){
-                         RemoveAll();
-                         return false;
-                     }
-                }
+                if(!(buff==""))            
+                    *this << buff;
             }
             file.close();
         }
         else
             return false;
+        return true;
     }
 
-    void WriteFile(const std::string &fileName) const
+    bool WriteFile(const std::string &fileName) const
     {
         std::ofstream file;
         file.open(fileName);
-        for (int i = 0; i < arr.size(); ++i){
-            if (arr[i] && arr[i]->state)
-                file << arr[i]->value << std::endl;
+        if(file.is_open()){
+            for (int i = 0; i < arr.size(); ++i){
+                if (arr[i] && arr[i]->state)
+                    file << arr[i]->value << std::endl;
+            }
+            file.close();
         }
-        file.close();
+        else{
+            return false;
+        }
+        return true;
+
     }
 
     int GetSize() const
     {
         return size;
+    }
+
+    int GetBufferSize() const
+    {
+        return arr.size();
+    }
+
+   T GetValueByKey(int key) const{
+       if(arr[key] && arr[key]->state)
+           return arr[key]->value;
+       return T();
     }
 
     void Resize()
@@ -229,7 +243,7 @@ public:
         return true;
     }
 
-    friend HashTable<T> operator &&(const HashTable<T> &ht1, const HashTable<T> &ht2)
+    friend HashTable<T>* operator &&(const HashTable<T> &ht1, const HashTable<T> &ht2)
     {
         HashTable<T> minHashTable = ht1;
         HashTable<T> maxHashTable = ht2;
@@ -238,11 +252,11 @@ public:
             minHashTable = ht2;
         }
 
-        HashTable<T> resHashTable(minHashTable.arr.size());
+        HashTable<T>* resHashTable = new HashTable<T>(minHashTable.arr.size());
         for (int i = 0; i < minHashTable.arr.size(); ++i)
         {
             if (minHashTable.arr[i] && maxHashTable[minHashTable.arr[i]->value])
-                resHashTable << ht2.arr[i]->value;
+                *resHashTable << ht2.arr[i]->value;
         }
         return resHashTable;
     }
