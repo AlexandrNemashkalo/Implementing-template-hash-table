@@ -103,7 +103,7 @@ public:
         return arr.size();
     }
 
-   T GetValueByKey(int key) const{
+    const T GetValueByKey(int key) const{
        if(arr[key] && arr[key]->state)
            return arr[key]->value;
        return T();

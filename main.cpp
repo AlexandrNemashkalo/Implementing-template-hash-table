@@ -7,6 +7,7 @@
 int main(int argc, char *argv[])
 {
     std::setlocale(LC_ALL,"RUS");
+    //QTextCodec::setCodecForLocale(QTextCodec::codecForName("Windows-1251"));
 
     HashTableTest<std::string> test ;
     test.StartHashTableTests();
@@ -15,10 +16,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-
-
-
-
-    //return 0;
     return a.exec();
 }

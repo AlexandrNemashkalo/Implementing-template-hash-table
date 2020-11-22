@@ -6,7 +6,6 @@
 #include "hashtable.h"
 
 
-
 template<class T>
 class HashTableTest{
 public:
@@ -98,10 +97,6 @@ public:
         resHT.GetHashTableFromFile(path);
         assert(resHT == ht);
     }
-
-
-
-
 };
 
 

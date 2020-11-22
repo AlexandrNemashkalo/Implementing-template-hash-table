@@ -52,17 +52,14 @@ QDynamicAuthor::QDynamicAuthor(QWidget *parent, Author* author):
     titleGanreWgt->setLayout(titleLayout2);
     titleLayout->addWidget(titleGanreWgt);
 
-
-    /**/
     titleW->setLayout(titleLayout);
-
 
     QListWidget* listWgt =new QListWidget;
     lstWgt = listWgt;
     lstWgt->setContentsMargins(0,5,0,5);
     connect(lstWgt, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), SLOT(showDeleteBtn(QListWidgetItem *, QListWidgetItem *)));
 
-    QWidget* pusgWgt = new QWidget;
+    QWidget* pushWgt = new QWidget;
     QLayout* l2 = new QHBoxLayout;
     l2->setContentsMargins(0,5,0,5);
     QLineEdit * input = new QLineEdit();
@@ -71,119 +68,112 @@ QDynamicAuthor::QDynamicAuthor(QWidget *parent, Author* author):
     pushBtn->setFixedWidth(75);
     connect( pushBtn, SIGNAL( clicked() ), SLOT( onPushBtnClicked() ) );
     l2->addWidget( pushBtn );
-    pusgWgt->setLayout( l2 );
+    pushWgt->setLayout( l2 );
 
     l->addWidget(titleW);
-    l->addWidget( lstWgt );
-    l->addWidget(pusgWgt);
+    l->addWidget(lstWgt);
+    l->addWidget(pushWgt);
 
     setLayout( l );
 
-    this->setLayout(l);
-
-
-
-    for (int i = 0; i < author->genres->GetBufferSize(); ++i){
-            std::string  value =  author->genres->GetValueByKey(i);
-            if(value != std::string())
-                AddGenre(value);
-    }
-
-}
-
-void QDynamicAuthor::onBtnClicked() {
-    if( QPushButton* btn = qobject_cast< QPushButton* >( sender() ) ) {
-        if( QLabel* e = btn->parent()->findChild< QLabel* >() ) {
-            QMessageBox::information( this, "Button was clicked!", e->text() );
-            return;
+    if(author->genres->GetSize()>0)
+    {
+        for (int i = 0; i < author->genres->GetBufferSize(); ++i)
+        {
+                std::string  value =  author->genres->GetValueByKey(i);
+                if(value != std::string())
+                    AddGenre(QString::fromStdString(value));
         }
     }
 }
 
-void QDynamicAuthor::onDeleteAuthorBtnClicked(){
+void QDynamicAuthor::onDeleteAuthorBtnClicked()
+{
     delete this;
 }
 
-void QDynamicAuthor::AddGenre(const std::string& value){
-        QListWidgetItem* item = new QListWidgetItem( lstWgt );
+void QDynamicAuthor::AddGenre(const QString& value)
+{
+    QListWidgetItem* item = new QListWidgetItem( lstWgt );
 
-        QWidget* wgt = new QWidget;
-        QLayout* l = new QHBoxLayout;
-        QLabel * genre = new QLabel(QString::fromStdString(value));
-        genre->setWordWrap(true);
-        l->addWidget(genre );
-        QPushButton* deleteGanreBtn = new QPushButton( "❌" );
-        deleteGanreBtn->setFixedWidth(25);
-        deleteGanreBtn->setFixedHeight(25);
-        deleteGanreBtn->hide();
-        connect( deleteGanreBtn, SIGNAL( clicked() ), SLOT( onDeleteGanreBtnClicked() ) );
+    QWidget* wgt = new QWidget;
+    QLayout* l = new QHBoxLayout;
+    QLabel * genre = new QLabel(value);
+    genre->setWordWrap(true);
+    l->addWidget(genre );
+    QPushButton* deleteGanreBtn = new QPushButton( "❌" );
+    deleteGanreBtn->setFixedWidth(25);
+    deleteGanreBtn->setFixedHeight(25);
+    deleteGanreBtn->hide();
+    connect( deleteGanreBtn, SIGNAL( clicked() ), SLOT( onDeleteGanreBtnClicked() ) );
 
-        l->addWidget( deleteGanreBtn );
-        wgt->setLayout( l );
-
-        item->setSizeHint( wgt->sizeHint() );
-
-        lstWgt->setItemWidget( item, wgt );
+    l->addWidget( deleteGanreBtn );
+    wgt->setLayout( l );
+    item->setSizeHint( wgt->sizeHint() );
+    lstWgt->setItemWidget( item, wgt );
 }
 
-void QDynamicAuthor::onPushBtnClicked(){
-    if( QPushButton* btn = qobject_cast< QPushButton* >( sender() ) ) {
+void QDynamicAuthor::onPushBtnClicked()
+{
+    if( QPushButton* btn = qobject_cast< QPushButton* >(sender()) )
+    {
         QLineEdit* e = btn->parent()->findChild< QLineEdit* >();
         if( e && e->text()!=""  ) {
             bool result = *(this->author->genres) <<e->text().toStdString() ;
-                if(result)
-                    AddGenre(e->text().toStdString());
-                else
-                    QMessageBox::information( this, "Button was clicked!", QString("Такой жанр уже существует") );
-
+            if(result){
+                AddGenre(e->text());
+                e->setText("");
+            }
+            else
+                QMessageBox::information( this, "Button was clicked!", QString("Такой жанр уже существует") );
         }
     }
 }
 
- void QDynamicAuthor::showDeleteBtn(QListWidgetItem * itemCur, QListWidgetItem * itemPr ){
-     QWidget *widget1 = qobject_cast<QWidget*>(lstWgt->itemWidget(itemCur));
-     QPushButton *btnCur = widget1->findChild<QPushButton*>();
-     btnCur->show();
+void QDynamicAuthor::showDeleteBtn(QListWidgetItem * itemCur, QListWidgetItem * itemPr )
+{
+    QWidget *widget1 = qobject_cast<QWidget*>(lstWgt->itemWidget(itemCur));
+    QPushButton *btnCur = widget1->findChild<QPushButton*>();
+    btnCur->show();
 
-     if(QWidget *widget2 = qobject_cast<QWidget*>(lstWgt->itemWidget(itemPr))){
-         QPushButton *btnPr = widget2->findChild<QPushButton*>();
-         btnPr->hide();
-     }
+    if(QWidget *widget2 = qobject_cast<QWidget*>(lstWgt->itemWidget(itemPr))){
+        QPushButton *btnPr = widget2->findChild<QPushButton*>();
+        btnPr->hide();
+    }
 }
 
-void QDynamicAuthor::onDeleteGanreBtnClicked(){
-        if(lstWgt->count()>1){
-            QListWidgetItem* item = lstWgt->currentItem();
-            QWidget *widget = qobject_cast<QWidget*>(lstWgt->itemWidget(item));
-            QLabel* genre = widget->findChild<QLabel*>();
-            author->genres->Remove(genre->text().toStdString());
-            delete lstWgt->takeItem(lstWgt->currentRow());
-        }
-        else{
-           QMessageBox::information( this, "Button was clicked!",QString("должен остаться хотя бы один жанр"));
-        }
+void QDynamicAuthor::onDeleteGanreBtnClicked()
+{
+    if(lstWgt->count()>1)
+    {
+        QListWidgetItem* item = lstWgt->currentItem();
+        QWidget *widget = qobject_cast<QWidget*>(lstWgt->itemWidget(item));
+        QLabel* genre = widget->findChild<QLabel*>();
+        author->genres->Remove(genre->text().toStdString());
+        delete lstWgt->takeItem(lstWgt->currentRow());
+    }
+    else{
+       QMessageBox::information( this, "Button was clicked!",QString("В коллекции должен содержаться как минимум один жанр"));
+    }
 }
 
-void QDynamicAuthor::onDownloadAuthorBtnClicked(){
-        QString fileName = QFileDialog::getOpenFileName(this,
-                                    QString::fromUtf8("Открыть файл"),
-                                    QDir::currentPath(),
-                                    "TXT File(*.txt)");
-        if(!(fileName =="")){
+void QDynamicAuthor::onDownloadAuthorBtnClicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                QString::fromUtf8("Открыть файл"),
+                                QDir::currentPath(),
+                                "TXT File(*.txt)");
+    if(!(fileName ==""))
+    {
         if(!this->author->genres->WriteFile(fileName.toStdString()))
-            QMessageBox::information( this, "Button was clicked!",QString("не удалось загрузить колекцию в файл"));
-        }
+            QMessageBox::information( this, "Button was clicked!",QString("Не удалось загрузить колекцию в файл"));
+    }
 }
-
-
 
 QDynamicAuthor::~QDynamicAuthor()
 {
-    /* Деструктор
-     */
     delete author;
     delete lstWgt;
-
 }
 
 

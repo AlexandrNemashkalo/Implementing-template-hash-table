@@ -5,7 +5,7 @@
 #include "vector"
 #include "author.h"
 #include "QMessageBox"
-
+#include <QFileDialog>
 #include "QHBoxLayout"
 
 
@@ -20,12 +20,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QHBoxLayout* scrollLayout;
+
     void AddAuthor(Author * author);
 
 private slots:
-
-
     void on_pushButton_clicked();
 
     void on_loadFileBtn_clicked();
@@ -36,6 +34,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QHBoxLayout* scrollLayout;
     std::vector<Author*> authors;
+
 };
 #endif // MAINWINDOW_H

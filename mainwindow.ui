@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1086</width>
-    <height>622</height>
+    <width>1124</width>
+    <height>631</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1124</width>
+    <height>631</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1124</width>
+    <height>631</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -17,8 +29,8 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>30</y>
+      <x>330</x>
+      <y>40</y>
       <width>761</width>
       <height>541</height>
      </rect>
@@ -51,8 +63,8 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>30</y>
+      <x>40</x>
+      <y>40</y>
       <width>241</width>
       <height>171</height>
      </rect>
@@ -161,8 +173,8 @@
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>250</y>
+      <x>40</x>
+      <y>260</y>
       <width>241</width>
       <height>321</height>
      </rect>
@@ -213,8 +225,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>40</x>
+      <y>20</y>
       <width>201</width>
       <height>17</height>
      </rect>
@@ -226,8 +238,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>10</y>
+      <x>330</x>
+      <y>20</y>
       <width>201</width>
       <height>17</height>
      </rect>
@@ -239,8 +251,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>230</y>
+      <x>40</x>
+      <y>240</y>
       <width>211</width>
       <height>17</height>
      </rect>
@@ -255,7 +267,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1086</width>
+     <width>1124</width>
      <height>22</height>
     </rect>
    </property>

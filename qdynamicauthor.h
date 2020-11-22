@@ -4,7 +4,6 @@
 #include <QFrame>
 #include <author.h>
 #include "QListWidget"
-#include <QFileDialog>
 
 
 class QDynamicAuthor : public QFrame
@@ -15,22 +14,23 @@ public:
     ~QDynamicAuthor();
     QDynamicAuthor(QWidget *parent =0,Author* author = 0);
     Author* author;
-    void AddGenre(const std::string& value);
+    void AddGenre(const QString& value);
 
 
 private:
-    QListWidget * lstWgt ; //вот так нахуй!
-
+    QListWidget * lstWgt;
 
 
 public slots:
-    void onBtnClicked() ;
     void onDeleteAuthorBtnClicked();
-    void onPushBtnClicked();
-    void onDeleteGanreBtnClicked();
-    void showDeleteBtn(QListWidgetItem *current, QListWidgetItem *previous);
-    void onDownloadAuthorBtnClicked();
 
+    void onPushBtnClicked();
+
+    void onDeleteGanreBtnClicked();
+
+    void showDeleteBtn(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void onDownloadAuthorBtnClicked();
 
 };
 

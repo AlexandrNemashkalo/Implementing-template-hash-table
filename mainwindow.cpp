@@ -14,36 +14,30 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea->setWidget(ScrollAreaWidgetContents);
     scrollLayout = new QHBoxLayout(ScrollAreaWidgetContents);
 
-
     Author *a = new Author("Иван Иванов");
-
     AddAuthor(a);
-
 }
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
-
+    delete scrollLayout;
 }
 
 
-void MainWindow::AddAuthor(Author * author){
+void MainWindow::AddAuthor(Author * author)
+{
     authors.push_back(author);
     scrollLayout->addWidget(new QDynamicAuthor(this,author));
 }
 
-
-
 void MainWindow::on_pushButton_clicked()
 {
     if(ui->downloadFile->text() !=""){
-
         HashTable<std::string> ht;
         if(!ht.GetHashTableFromFile(ui->downloadFile->text().toStdString()))
         {
-             QMessageBox::information( this, "Button was clicked!",QString("не удалось найти файл"));
+             QMessageBox::information( this, "Button was clicked!",QString("Не удалось найти файл"));
         }
         else {
             Author * a  = new Author(ui->lineEdit->text().toStdString(),&ht);
@@ -56,8 +50,6 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-
-
 void MainWindow::on_loadFileBtn_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -68,8 +60,6 @@ void MainWindow::on_loadFileBtn_clicked()
     if(!(fileName =="")){
         ui->downloadFile->setText(fileName);
     }
-
-
 }
 
 void MainWindow::on_pushButton_3_clicked()

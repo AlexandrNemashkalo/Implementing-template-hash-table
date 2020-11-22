@@ -12,11 +12,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     author.cpp \
-    hashtable.cpp \
     main.cpp \
     mainwindow.cpp \
-    qdynamicauthor.cpp \
-    test.cpp
+    qdynamicauthor.cpp
 
 HEADERS += \
     author.h \
