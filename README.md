@@ -14,6 +14,6 @@
 
 ![second](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/master/screens/result.png)
 
-3. Вывода сообщения отсутствии жанров в коллекции
+3. Вывода сообщения об отсутствии жанров в коллекции
 
 ![item](https://github.com/AlexandrNemashkalo/Implementing-template-hash-table/blob/master/screens/empty.png)
